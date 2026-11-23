@@ -4,10 +4,10 @@ Cartão digital interativo em uma única página (HTML + Tailwind): agendamento 
 
 ## Como usar
 
-Abra `cartao.html` no navegador ou sirva a pasta:
+Abra `index.html` no navegador ou sirva a pasta:
 
 ```
 python -m http.server 5340
 ```
 
-Os dados do contato ficam no bloco `CARD` no fim do `cartao.html`.
+Os dados do contato ficam no bloco `CARD` no fim do `index.html`.
