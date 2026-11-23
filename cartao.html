@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartão Digital | Drª Kátia Portinho · Otorrinolaringologista</title>
+  <meta name="description" content="Toque para agendar sua consulta pelo WhatsApp, conhecer o site ou salvar o contato da Drª Kátia Portinho, otorrinolaringologista.">
+  <meta name="theme-color" content="#5e1d34">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Drª Kátia Portinho">
+  <meta property="og:title" content="Cartão Digital | Drª Kátia Portinho · Otorrinolaringologista">
+  <meta property="og:description" content="Agende sua consulta pelo WhatsApp, conheça o site ou salve o contato da Drª Kátia Portinho.">
+  <meta property="og:image" content="foto.jpg">
+  <meta property="og:locale" content="pt_BR">
+
+  <link rel="icon" type="image/jpeg" href="icone.jpg">
+  <link rel="apple-touch-icon" href="icone.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root { --vinho: #702540; --vinho-escuro: #4f1428; --salmao: #f9b5a3; --rosa: #fcc9bb; }
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    body {
+      background: radial-gradient(circle at 50% 0%, #8a3350 0%, #4a1226 55%, #2b0a16 100%);
+      background-attachment: fixed;
+      color: var(--rosa);
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      min-height: 100vh; overflow-x: hidden;
+    }
+    .serif { font-family: 'Gilda Display', Georgia, serif; }
+
+    .card {
+      background: var(--vinho);
+      border: 1px solid rgba(249,181,163,.18);
+      box-shadow: 0 25px 50px -15px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08);
+      overflow: hidden; position: relative;
+    }
+    .hero { position: relative; height: 230px; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background: url('fundo.jpg') center/cover;
+      opacity: .55; mix-blend-mode: luminosity;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(150,70,95,.55), rgba(112,37,64,.9));
+    }
+    .hero-curve {
+      position: absolute; left: 0; right: 0; bottom: -1px; height: 70px; z-index: 1;
+    }
+    .foto {
+      width: 176px; height: 176px; border-radius: 9999px; object-fit: cover;
+      border: 5px solid var(--vinho);
+      box-shadow: 0 0 0 2px rgba(249,181,163,.45), 0 18px 40px -10px rgba(0,0,0,.6);
+    }
+    .leaf { position: absolute; fill: var(--salmao); pointer-events: none; }
+
+    .btn-action {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 14px 18px; border-radius: 16px;
+      background: var(--salmao); color: var(--vinho);
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 10px 24px -10px rgba(0,0,0,.55);
+      text-decoration: none;
+      transition: all .25s cubic-bezier(.16,1,.3,1);
+    }
+    .btn-action:hover, .btn-action:active {
+      transform: translateY(-2px); background: #ffc7b8;
+      box-shadow: 0 14px 28px -8px rgba(249,181,163,.35);
+    }
+    .ico {
+      width: 42px; height: 42px; border-radius: 12px; flex: none;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(112,37,64,.12); border: 1px solid rgba(112,37,64,.25);
+    }
+    .btn-util {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px; border-radius: 14px; font-size: 12px; font-weight: 700;
+      color: var(--rosa); background: rgba(255,255,255,.06);
+      border: 1px solid rgba(249,181,163,.28);
+      transition: all .2s;
+    }
+    .btn-util:hover { border-color: var(--salmao); background: rgba(255,255,255,.1); }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(100px); opacity: 0;
+      background: var(--vinho-escuro); border: 1px solid var(--salmao); color: var(--rosa);
+      padding: 12px 24px; border-radius: 9999px; font-size: 13px; font-weight: 700;
+      box-shadow: 0 15px 35px rgba(0,0,0,.6);
+      transition: all .3s cubic-bezier(.16,1,.3,1); z-index: 99; pointer-events: none;
+    }
+    .toast.active { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+
+<body class="flex flex-col items-center justify-between p-4 sm:p-6">
+  <div id="toast" class="toast">✓ Contato baixado para a agenda!</div>
+
+  <main class="w-full max-w-md my-auto py-6">
+    <div class="card rounded-3xl">
+
+      <!-- Topo com fundo e foto -->
+      <div class="hero">
+        <svg class="hero-curve" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 70 L0 40 Q200 -20 400 40 L400 70 Z" fill="#702540"/>
+        </svg>
+      </div>
+
+      <svg class="leaf" style="left:-14px;top:310px;width:70px;opacity:.95" viewBox="0 0 60 120" aria-hidden="true">
+        <path d="M0 8c20 0 38 4 52 12-18 4-36 2-52-4z"/><path d="M0 38c18-2 34 2 50 12-18 6-36 4-50-6z"/>
+        <path d="M0 70c16-6 32-4 44 6-6 22-24 32-44 30z"/>
+      </svg>
+
+      <div class="relative flex flex-col items-center text-center px-6 pb-8 -mt-28 z-10">
+        <img src="foto.jpg" alt="Drª Kátia Portinho" class="foto">
+
+        <h1 class="serif text-[34px] leading-tight mt-6" style="color:var(--salmao)">Drª Kátia Portinho</h1>
+        <p class="text-[13px] tracking-[0.32em] uppercase mt-2" style="color:var(--salmao)">Otorrinolaringologista</p>
+
+        <p class="text-[11px] font-semibold mt-5 mb-3 tracking-wide opacity-80">Agende sua consulta pelo WhatsApp</p>
+
+        <div class="w-full space-y-3">
+          <a class="btn-action" target="_blank" rel="noopener noreferrer"
+             href="https://api.whatsapp.com/send/?phone=5527996207901&text=Ol%C3%A1%2C%0D%0AEstou+vindo+de+seu+site.%0D%0AGostaria+de+agendar+uma+consulta.+Como+fa%C3%A7o%3F&type=phone_number&app_absent=0">
+            <div class="flex items-center gap-3.5 text-left">
+              <div class="ico"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#702540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div>
+                <strong class="block text-[13px] font-extrabold uppercase tracking-tight">Consultório Centro Médico Jardins</strong>
+                <span class="block text-xs font-semibold opacity-75">(27) 99620-7901</span>
+              </div>
+            </div>
+            <span class="text-lg font-bold">↗</span>
+          </a>
+
+          <a class="btn-action" target="_blank" rel="noopener noreferrer"
+             href="https://api.whatsapp.com/send/?phone=552733348000&text=Ol%C3%A1%2C%0D%0AEstou+vindo+de+seu+site.%0D%0AGostaria+de+agendar+uma+consulta.+Como+fa%C3%A7o%3F&type=phone_number&app_absent=0">
+            <div class="flex items-center gap-3.5 text-left">
+              <div class="ico"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#702540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div>
+                <strong class="block text-[13px] font-extrabold uppercase tracking-tight">Consultório Hospital Santa Rita</strong>
+                <span class="block text-xs font-semibold opacity-75">(27) 3334-8000</span>
+              </div>
+            </div>
+            <span class="text-lg font-bold">↗</span>
+          </a>
+
+          <a class="btn-action" target="_blank" rel="noopener noreferrer"
+             href="https://api.whatsapp.com/send/?phone=5527996210134&text=Ol%C3%A1%2C%0D%0AEstou+vindo+de+seu+site.%0D%0AGostaria+de+agendar+uma+consulta.+Como+fa%C3%A7o%3F&type=phone_number&app_absent=0">
+            <div class="flex items-center gap-3.5 text-left">
+              <div class="ico"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#702540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div>
+                <strong class="block text-[13px] font-extrabold uppercase tracking-tight">Consultório Shopping Praia da Costa</strong>
+                <span class="block text-xs font-semibold opacity-75">(27) 99621-0134</span>
+              </div>
+            </div>
+            <span class="text-lg font-bold">↗</span>
+          </a>
+
+          <a class="btn-action" target="_blank" rel="noopener noreferrer" href="https://drakatiaportinho.com.br/">
+            <div class="flex items-center gap-3.5 text-left">
+              <div class="ico"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#702540" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+              <div>
+                <strong class="block text-[13px] font-extrabold uppercase tracking-tight">Site</strong>
+                <span class="block text-xs font-semibold opacity-75">drakatiaportinho.com.br</span>
+              </div>
+            </div>
+            <span class="text-lg font-bold">↗</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 w-full pt-5">
+          <button id="btnSaveVcard" type="button" class="btn-util">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span>Salvar Contato</span>
+          </button>
+          <button id="btnShareCard" type="button" class="btn-util">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>Compartilhar</span>
+          </button>
+        </div>
+      </div>
+
+      <svg class="leaf" style="right:-10px;bottom:-6px;width:70px;transform:rotate(-20deg)" viewBox="0 0 60 120" aria-hidden="true">
+        <path d="M60 8C40 8 22 12 8 20c18 4 36 2 52-4z"/><path d="M60 38c-18-2-34 2-50 12 18 6 36 4 50-6z"/>
+      </svg>
+    </div>
+
+    <footer class="text-center pt-5 text-xs opacity-60">
+      <p>Drª Kátia Portinho · Otorrinolaringologista</p>
+    </footer>
+  </main>
+
+  <script>
+    // Dados do cartão (edite aqui)
+    const CARD = {
+      nome: 'Drª Kátia Portinho',
+      cargo: 'Otorrinolaringologista',
+      telefones: [
+        { rotulo: 'Centro Médico Jardins', numero: '+5527996207901' },
+        { rotulo: 'Hospital Santa Rita',   numero: '+552733348000' },
+        { rotulo: 'Shopping Praia da Costa', numero: '+5527996210134' }
+      ],
+      site: 'https://drakatiaportinho.com.br/',
+      url: location.href.split('#')[0]
+    };
+
+    function showToast(text) {
+      const t = document.getElementById('toast');
+      t.textContent = text; t.classList.add('active');
+      setTimeout(() => t.classList.remove('active'), 2800);
+    }
+
+    document.getElementById('btnSaveVcard').addEventListener('click', () => {
+      const linhas = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + CARD.nome, 'N:Portinho;Kátia;;Drª;',
+        'TITLE:' + CARD.cargo, 'ORG:' + CARD.nome];
+      CARD.telefones.forEach(t => linhas.push('TEL;TYPE=WORK,VOICE:' + t.numero));
+      linhas.push('URL:' + CARD.site,
+        'NOTE:Consultórios: ' + CARD.telefones.map(t => t.rotulo).join(', '), 'END:VCARD');
+      const url = URL.createObjectURL(new Blob([linhas.join('\r\n')], { type: 'text/vcard;charset=utf-8;' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = 'Dra_Katia_Portinho.vcf';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      showToast('✓ Contato baixado para a agenda!');
+    });
+
+    document.getElementById('btnShareCard').addEventListener('click', () => {
+      const msg = `🩺 *${CARD.nome}* · ${CARD.cargo}\n\n📲 Cartão digital para agendar sua consulta:\n${CARD.url}\n\n🌐 ${CARD.site}`;
+      if (navigator.share) {
+        navigator.share({ title: 'Cartão Digital ' + CARD.nome, text: msg, url: CARD.url }).catch(() => {});
+      } else {
+        window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+      }
+    });
+  </script>
+</body>
+</html>
